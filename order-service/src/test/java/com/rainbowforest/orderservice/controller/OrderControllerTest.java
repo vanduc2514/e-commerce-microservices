@@ -1,20 +1,12 @@
 package com.rainbowforest.orderservice.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.Cookie;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import com.rainbowforest.orderservice.domain.Item;
+import com.rainbowforest.orderservice.domain.Order;
+import com.rainbowforest.orderservice.domain.Product;
+import com.rainbowforest.orderservice.domain.User;
+import com.rainbowforest.orderservice.feignclient.UserClient;
+import com.rainbowforest.orderservice.service.CartService;
+import com.rainbowforest.orderservice.service.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,13 +17,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.rainbowforest.orderservice.domain.Item;
-import com.rainbowforest.orderservice.domain.Order;
-import com.rainbowforest.orderservice.domain.Product;
-import com.rainbowforest.orderservice.domain.User;
-import com.rainbowforest.orderservice.feignclient.UserClient;
-import com.rainbowforest.orderservice.service.CartService;
-import com.rainbowforest.orderservice.service.OrderService;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.http.Cookie;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -94,7 +91,7 @@ public class OrderControllerTest {
 		when(orderService.saveOrder(new Order())).thenReturn(order);
 		//then
 		
-		mockMvc.perform(post("/order/{userId}", USER_ID).cookie(new Cookie[] {cookie}))
+		mockMvc.perform(post("/order/{userId}", USER_ID).cookie(cookie))
         .andExpect(status().isCreated())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(jsonPath("$.items").isArray());
