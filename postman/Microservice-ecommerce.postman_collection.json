@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "bab0e697-1490-46c9-899c-d04a67ef4d84",
+		"name": "Microservice-ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "Register New User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"testuser\",\r\n    \"userPassword\": \"123456\",\r\n    \"userDetails\": {\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"email\": \"john_doe@notexist.com\",\r\n        \"phoneNumber\": \"123-456-7890\",\r\n        \"street\": \"No where to be found\",\r\n        \"streetNumber\": \"42\",\r\n        \"zipCode\": \"42\",\r\n        \"locality\": \"Not Exist\",\r\n        \"country\": \"Not Exist\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8900/api/accounts/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8900",
+							"path": [
+								"api",
+								"accounts",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8900/api/accounts/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8900",
+							"path": [
+								"api",
+								"accounts",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By User Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8900/api/accounts/users?name=testuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8900",
+							"path": [
+								"api",
+								"accounts",
+								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "testuser"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
